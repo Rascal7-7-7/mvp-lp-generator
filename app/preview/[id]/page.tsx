@@ -9,41 +9,47 @@ export default async function PreviewPage({ params }: { params: Promise<{ id: st
   if (!lp) notFound()
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* プレビューバー */}
-      <div className="sticky top-0 z-20 bg-white border-b border-gray-200 px-4 py-3 shadow-sm">
-        <div className="max-w-lg mx-auto flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-700">
-              プレビュー
-            </span>
-            <span className="text-sm text-gray-600 truncate">{lp.store_name}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Link
-              href={`/editor/${lp.id}`}
-              className="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-            >
-              ← 編集に戻る
-            </Link>
-            <Link
-              href={`/settings/${lp.id}`}
-              className="rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-indigo-500 transition-colors"
-            >
-              公開設定 →
-            </Link>
-          </div>
+    <div className="min-h-screen bg-surface-container">
+      {/* Preview bar */}
+      <header className="fixed top-0 w-full z-20 glass-nav shadow-sm h-14 flex items-center justify-between px-5">
+        <div className="flex items-center gap-3">
+          <span className="text-xl font-headline font-bold text-primary">LP Concierge</span>
+          <span className="hidden md:flex bg-surface-container p-1 rounded-lg">
+            <span className="px-3 py-1 text-xs font-bold text-primary bg-white rounded-md shadow-sm">プレビュー</span>
+          </span>
+        </div>
+        <nav className="hidden md:flex items-center gap-6">
+          <Link href={`/editor/${lp.id}`} className="text-sm text-on-surface-variant hover:text-primary transition-colors">作成</Link>
+          <span className="text-sm text-primary font-bold border-b-2 border-primary pb-0.5">プレビュー</span>
+          <Link href={`/settings/${lp.id}`} className="text-sm text-on-surface-variant hover:text-primary transition-colors">公開設定</Link>
+        </nav>
+        <div className="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center">
+          <span className="material-symbols-outlined text-sm text-on-surface-variant">person</span>
+        </div>
+      </header>
+
+      <div className="pt-14 pb-20">
+        <div className="max-w-[900px] mx-auto bg-white editorial-shadow">
+          <LPPreview lp={lp} />
         </div>
       </div>
 
-      {/* プレビュー本体（スマホ幅を意識） */}
-      <div className="py-6">
-        <div className="max-w-sm mx-auto rounded-2xl overflow-hidden shadow-xl ring-1 ring-gray-200 bg-white">
-          <LPPreview lp={lp} />
-        </div>
-        <p className="mt-4 text-center text-xs text-gray-400">
-          スマートフォンでの表示イメージです
-        </p>
+      {/* Floating actions */}
+      <div className="fixed bottom-6 right-6 flex gap-3 z-50">
+        <Link
+          href={`/editor/${lp.id}`}
+          className="flex items-center gap-1.5 bg-white text-primary border border-outline-variant px-5 py-2.5 rounded-full text-sm font-bold shadow-lg hover:bg-surface-container-low transition-colors"
+        >
+          <span className="material-symbols-outlined text-base">edit</span>
+          編集に戻る
+        </Link>
+        <Link
+          href={`/settings/${lp.id}`}
+          className="flex items-center gap-1.5 bg-primary text-on-primary px-5 py-2.5 rounded-full text-sm font-bold shadow-xl hover:opacity-90 transition-all active:scale-95"
+        >
+          <span className="material-symbols-outlined text-base">rocket_launch</span>
+          公開設定へ
+        </Link>
       </div>
     </div>
   )

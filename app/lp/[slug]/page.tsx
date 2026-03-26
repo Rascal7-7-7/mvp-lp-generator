@@ -16,10 +16,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function PublicLPPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const lp = await getLandingPageBySlug(slug)
-
-  if (!lp || lp.status !== 'published') {
-    notFound()
-  }
-
+  if (!lp || lp.status !== 'published') notFound()
   return <LPPreview lp={lp} />
 }
